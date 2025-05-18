@@ -32,7 +32,7 @@ stages:
           - task: ArchiveFiles@2
             displayName: Zip Api
             inputs:
-              rootFolderOrFile: "$(Build.ArtifactStagingDirectory)/api"
+              rootFolderOrFile: "$(Build.ArtifactStagingDirectory)/src"
               includeRootFolder: false
               archiveType: "zip"
               archiveFile: "$(Build.ArtifactStagingDirectory)/out/shoppinglists-api-$(Build.BuildId).zip"
