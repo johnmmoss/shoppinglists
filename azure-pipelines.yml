@@ -45,7 +45,7 @@ stages:
 
       - deployment: Deploy
         environment: my-food-tracker-dev
-        #dependsOn: ReviewPlan
+        dependsOn: BuildApi
         strategy:
           runOnce:
             deploy:
