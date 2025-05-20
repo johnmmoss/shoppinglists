@@ -16,33 +16,33 @@ variables:
   solutionPath: "src/ShoppingLists.sln"
 
 stages:
-  - stage: Build
-    displayName: Build
-    jobs:
-      - job: "BuildApi"
-        steps:
-          - task: DotNetCoreCLI@2
-            displayName: dotnet Publish
-            inputs:
-              command: publish
-              publishWebProjects: false
-              projects: "$(solutionPath)"
-              arguments: "--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)"
-              zipAfterPublish: false
-          - task: ArchiveFiles@2
-            displayName: Zip Api
-            inputs:
-              rootFolderOrFile: "$(Build.ArtifactStagingDirectory)/src"
-              includeRootFolder: false
-              archiveType: "zip"
-              archiveFile: "$(Build.ArtifactStagingDirectory)/out/shoppinglists-api-$(Build.BuildId).zip"
-              replaceExistingArchive: true
-          - task: PublishBuildArtifacts@1
-            displayName: "Publish Artifact (API)"
-            inputs:
-              PathtoPublish: "$(Build.ArtifactStagingDirectory)/out"
-              ArtifactName: "drop_api"
-              publishLocation: "Container"
+  # - stage: Build
+  #   displayName: Build
+  #   jobs:
+  #     - job: "BuildApi"
+  #       steps:
+  #         - task: DotNetCoreCLI@2
+  #           displayName: dotnet Publish
+  #           inputs:
+  #             command: publish
+  #             publishWebProjects: false
+  #             projects: "$(solutionPath)"
+  #             arguments: "--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)"
+  #             zipAfterPublish: false
+  #         - task: ArchiveFiles@2
+  #           displayName: Zip Api
+  #           inputs:
+  #             rootFolderOrFile: "$(Build.ArtifactStagingDirectory)/src"
+  #             includeRootFolder: false
+  #             archiveType: "zip"
+  #             archiveFile: "$(Build.ArtifactStagingDirectory)/out/shoppinglists-api-$(Build.BuildId).zip"
+  #             replaceExistingArchive: true
+  #         - task: PublishBuildArtifacts@1
+  #           displayName: "Publish Artifact (API)"
+  #           inputs:
+  #             PathtoPublish: "$(Build.ArtifactStagingDirectory)/out"
+  #             ArtifactName: "drop_api"
+  #             publishLocation: "Container"
 
       - deployment: Deploy
         environment: my-food-tracker-dev
@@ -66,6 +66,16 @@ stages:
                 #       cd $(Pipeline.Workspace)\drop_infra\environments\dev
                 #       terraform init
                 #       terraform apply -no-color -auto-approve
+                
+                # https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/download-build-artifacts-v1?view=azure-pipelines
+                - task: DownloadBuildArtifacts@1
+                  pipeline: 'johnmmoss.shoppinglists'
+                  buildType: specific
+                  buildVersionToDownload: specific
+                  buildId: 406
+                  artifactName: drop_api
+                  downloadPath: "$(Pipeline.Workspace)"
+
                 - task: AzureRmWebAppDeployment@4
                   displayName: DeployApi
                   inputs:
