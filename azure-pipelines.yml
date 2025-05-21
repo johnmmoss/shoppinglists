@@ -62,14 +62,24 @@ stages:
                   artifactName: drop_api
                   downloadPath: "$(Pipeline.Workspace)"
 
-              - task: AzureRmWebAppDeployment@4
-                displayName: DeployApi
+              - task: AzureWebApp@1
+                displayName: 'Deploy to Azure App Service'
                 inputs:
-                  ConnectionType: "AzureRM"
-                  azureSubscription: "myfoodtracker-azure-devops"
-                  appType: "apiApp"
-                  WebAppName: "unstacked"
-                  packageForLinux: "$(Pipeline.Workspace)/**/*.zip"
+                  azureSubscription: 'myfoodtracker-azure-devops'
+                  appType: 'webAppLinux'  # Use 'webApp' for Windows apps
+                  appName: 'unstacked'
+                  package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+                  deploymentMethod: 'auto'  # or 'zipDeploy', 'runFromPackage', or 'webDeploy' (Windows only)
+
+              # Legacy task:
+              # - task: AzureRmWebAppDeployment@4
+              #   displayName: DeployApi
+              #   inputs:
+              #     ConnectionType: "AzureRM"
+              #     azureSubscription: "myfoodtracker-azure-devops"
+              #     appType: "apiApp"
+              #     WebAppName: "unstacked"
+              #     packageForLinux: "$(Pipeline.Workspace)/**/*.zip"
 
                 # - task: AzureCLI@2
                 #   displayName: "Create Infra"
