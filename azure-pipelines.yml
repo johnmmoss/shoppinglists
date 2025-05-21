@@ -54,6 +54,7 @@ stages:
               # https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/download-build-artifacts-v1?view=azure-pipelines
               - task: DownloadBuildArtifacts@1
                 inputs:
+                  project: 'JMSL'
                   pipeline: 'johnmmoss.shoppinglists'
                   buildType: specific
                   buildVersionToDownload: specific
