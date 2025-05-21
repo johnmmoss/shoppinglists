@@ -68,7 +68,7 @@ stages:
                   azureSubscription: 'myfoodtracker-azure-devops'
                   appType: 'webAppLinux'  # Use 'webApp' for Windows apps
                   appName: 'unstacked'
-                  package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+                  package: '$(Pipeline.Workspace)/**/*.zip'
                   deploymentMethod: 'auto'  # or 'zipDeploy', 'runFromPackage', or 'webDeploy' (Windows only)
 
               # Legacy task:
