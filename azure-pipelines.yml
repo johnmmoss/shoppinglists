@@ -69,7 +69,7 @@ stages:
                   appType: 'webAppLinux'  # Use 'webApp' for Windows apps
                   appName: 'unstacked'
                   package: '$(Pipeline.Workspace)/**/*.zip'
-                  deploymentMethod: 'auto'  # or 'zipDeploy', 'runFromPackage', or 'webDeploy' (Windows only)
+                  deploymentMethod: 'zipDeploy' 
 
               # Legacy task:
               # - task: AzureRmWebAppDeployment@4
