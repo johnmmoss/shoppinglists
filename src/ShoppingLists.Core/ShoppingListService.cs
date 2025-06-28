@@ -2,7 +2,8 @@ namespace ShoppingLists.Core;
 
 public class ShoppingListService(IShoppingListRepository shoppingListRepository) : IShoppingListService
 {
-    // TODO Replace in memory shopping list with calls to _shoppingListRepository 
+    // TODO Introduce an in memory _shoppingListRepository and use it here...
+    
     private List<ShoppingList> _shoppingLists = new();
 
     public async Task<ShoppingList> GetByID(Guid id)

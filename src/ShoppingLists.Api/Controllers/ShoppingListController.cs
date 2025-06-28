@@ -29,7 +29,7 @@ public class ShoppingListController(IShoppingListService _shoppingListService) :
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
-        var shoppingList = _shoppingListService.GetByID(id);
+        var shoppingList = await _shoppingListService.GetByID(id);
 
         if (shoppingList == null)
             return NotFound();

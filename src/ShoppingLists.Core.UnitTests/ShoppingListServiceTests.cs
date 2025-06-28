@@ -64,7 +64,6 @@ public class ShoppingListServiceTests
         Assert.Equal(1, created.Categories.First().Id);
     }
 
-    /***
     [Fact]
     public void GetAll_gets_all_shopping_lists()
     {
@@ -138,5 +137,4 @@ public class ShoppingListServiceTests
         
         Assert.Empty(shoppingListService.GetAll());
     }
-    **/
 }
